@@ -1,6 +1,5 @@
-### FdiTools Specific
-*.pdf
-*.emf
+### SymbolicTools Specific
+
 
 ### Matlab
 *.asv
