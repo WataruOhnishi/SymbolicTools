@@ -21,12 +21,12 @@ sys_c = num_c_sym*S_sym/(den_c_sym*S_sym);
 % Tustin transform
 sys_d = subs(sys_c,{s_sym},{2*(z_sym-1)/(Ts_sym*(z_sym+1))});
 temp = children(partfrac(sys_d,z_sym)); % strictly proper
-% z_sym‚ğŠÜ‚Ş‚©‚Ç‚¤‚©
-T1 = zeros(length(temp),1); % z‚Ì‘½€®
-T2 = ones(length(temp),1); % ’è”€
+% z_symã‚’å«ã‚€ã‹ã©ã†ã‹
+T1 = zeros(length(temp),1); % zã®å¤šé …å¼
+T2 = ones(length(temp),1); % å®šæ•°é …
 for kk = 1:1:length(temp)
     [num,den] = numden(temp(kk));
-    if 1 < length(coeffs(num)) || 1 < length(coeffs(den)) % z‚Ì‘½€®‚Ìê‡
+    if 1 < length(coeffs(num)) || 1 < length(coeffs(den)) % zã®å¤šé …å¼ã®å ´åˆ
        T1(kk) = 1;
        T2(kk) = 0;
     end
