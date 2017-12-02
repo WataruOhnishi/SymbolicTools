@@ -1,27 +1,30 @@
-function [Ad_sym, bd_sym, cd_sym] = c2d_zoh_sym(Ac_sym, bc_sym, cc_sym, Ts_sym, n_order)
+function [Ad_sym, bd_sym, cd_sym] = c2d_zoh_sym(Ac_sym, bc_sym, cc_sym, Ts_sym, n_expm, n_trun)
 %c2d_zoh_sym - c2d by zero-order-hold by symbolic math toolbox
 %
 % [Ad_sym, bd_sym, cd_sym] = c2d_zoh_sym(Ac_sym, bc_sym, cc_sym, Ts_sym, n_order)
-% Ac_sym, bc_sym, cc_sym: A, B, C matrices in continuous
-% Ts_sym                : sampling time [s]
-% n_order               : truncation order for expm
-% Author    : Wataru Ohnishi, University of Tokyo, 2017
+% Ac_sym, bc_sym, cc_sym : A, B, C matrices in continuous
+% Ts_sym                 : sampling time [s]
+% n_expm                 : maximum order for exact expm
+% n_trun                 : truncation order for expm
+% Author                 : Wataru Ohnishi, University of Tokyo, 2017
 %%%%%
 
 n = length(Ac_sym);
 if nargin < 4
-    n_order = 10;
+    n_expm = 3;
+end
+if nargin < 5
+    n_trun = 10;
 end
 
 Ec = sym('Ec_', n+1); % def of augmented system
 Ec(1:n, 1:n+1) = [Ac_sym bc_sym]*Ts_sym;
 Ec(n+1,:) = zeros(1,n+1);
 
-
-if n > 3
+if n > n_expm
     S = zeros(n+1);
     
-    for k = 0:n_order
+    for k = 0:n_trun
         S = S +  Ec^k/factorial(k);
     end
     
