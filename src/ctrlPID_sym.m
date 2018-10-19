@@ -1,4 +1,4 @@
-function [A_sym,B_sym,C_sym,D_sym] = ctrlPID_sym(mn, bn, kn, Ktn, fp, Ts)
+function [A_sym,B_sym,C_sym,D_sym,kp_sym,ki_sym,kd_sym,tau_sym] = ctrlPID_sym(mn, bn, kn, Ktn, fp, Ts)
 %ctrlPID_sym - Design PID controller with discretization and realization by Sylvester matrix
 %              
 %   [A_sym,B_sym,C_sym,D_sym] = ctrlPID_sym(mn, bn, kn, Ktn, fp, Ts)
@@ -28,6 +28,13 @@ num_c_sym = [bc2 bc1 bc0];
 den_c_sym = [1 ac1 0];
 Ts_sym = Ts;
 [A_sym,B_sym,C_sym,D_sym] = c2d_tustin_sym(num_c_sym,den_c_sym,Ts_sym);
+
+tau_sym = 1/ac1;
+ki_sym = bc0*tau_sym;
+kp_sym = (bc1-ki_sym)*tau_sym;
+kd_sym = (bc2-kp_sym)*tau_sym;
+
+end
 
 
 %{

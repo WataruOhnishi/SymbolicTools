@@ -22,6 +22,7 @@ Ec(1:n, 1:n+1) = [Ac_sym bc_sym]*Ts_sym;
 Ec(n+1,:) = zeros(1,n+1);
 
 if n > n_expm
+    fprintf('Taylor approximation for n = %d\n',n_trun)
     S = zeros(n+1);
     
     for k = 0:n_trun
